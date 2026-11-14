@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B Ramachandran — Cybersecurity Portfolio</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#eaf5ff;
+  --card:#ffffff;
+  --line:#d4e8fa;
+  --text:#1b2e44;
+  --muted:#58708a;
+  --grad1:#2f8ad1;   /* light blue */
+  --grad2:#5db4ee;   /* sky */
+  --grad3:#bfe3fb;   /* pale blue */
+  --accent:#2f8ad1;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI', Inter, Arial, sans-serif;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* top-right corner circle with profile photo */
+.corner-orb{
+  position:fixed;
+  top:-90px;
+  right:-90px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--grad1), var(--grad2));
+  opacity:0.16;
+  z-index:0;
+  pointer-events:none;
+}
+@media (max-width:700px){ .corner-orb{ width:200px; height:200px; top:-60px; right:-60px; } }
+
+/* NAV */
+header{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 6vw;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.logo{ font-weight:800; font-size:1.2rem; letter-spacing:0.3px; color:var(--grad1); }
+nav ul{list-style:none; display:flex; gap:24px;}
+nav a{ color:var(--muted); text-decoration:none; font-size:0.92rem; font-weight:600; transition:color .2s; }
+nav a:hover, nav a.active{ color:var(--grad1); }
+.nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:1.6rem; cursor:pointer;}
+@media (max-width:880px){
+  nav ul{
+    position:fixed; top:60px; right:0; left:0;
+    flex-direction:column; gap:0;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    max-height:0; overflow:hidden; transition:max-height .3s ease;
+  }
+  nav ul.open{ max-height:680px; }
+  nav ul li{ border-top:1px solid var(--line); }
+  nav a{ display:block; padding:15px 6vw; }
+  .nav-toggle{ display:block; }
+}
+
+main{ position:relative; z-index:1; }
+section{ padding:80px 6vw; max-width:1200px; margin:0 auto; scroll-margin-top:74px; }
+.eyebrow{ display:inline-block; font-size:0.76rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--grad1); margin-bottom:12px; }
+h1{ font-size:clamp(2.1rem,5vw,3.4rem); line-height:1.12; font-weight:800; }
+h2{ font-size:clamp(1.6rem,3.5vw,2.2rem); font-weight:800; margin-bottom:8px; }
+p.lead{ color:var(--muted); font-size:1.05rem; max-width:620px; margin-top:16px; line-height:1.65; }
+.accent-text{ color:var(--grad2); }
+
+/* HERO */
+#home{ min-height:86vh; display:flex; align-items:center; padding-top:40px; }
+.hero-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center; width:100%; }
+@media (max-width:880px){ .hero-grid{grid-template-columns:1fr; text-align:center;} .hero-grid .photo-wrap{margin:0 auto;} }
+
+.photo-wrap{
+  width:340px; height:340px; border-radius:50%; padding:10px;
+  background:linear-gradient(135deg, var(--grad1), var(--grad2));
+  margin-left:auto;
+}
+.photo-wrap img{
+  width:100%; height:100%; object-fit:cover; object-position:center 18%; border-radius:50%;
+  border:6px solid var(--bg); display:block;
+}
+
+.btn-row{ display:flex; gap:14px; margin-top:28px; flex-wrap:wrap; }
+@media (max-width:880px){ .btn-row{ justify-content:center; } }
+.btn{
+  padding:13px 26px; border-radius:50px; font-weight:700; font-size:0.92rem;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:transform .2s, box-shadow .2s; border:1px solid transparent;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn-primary{ background:var(--grad1); color:#fff; box-shadow:0 8px 22px rgba(47,138,209,0.28); }
+.btn-ghost{ border:1px solid var(--line); color:var(--text); background:var(--card); }
+.btn-whatsapp{ background:#1ea656; color:#fff; box-shadow:0 8px 22px rgba(30,166,86,0.25); }
+
+/* CARDS */
+.grid{ display:grid; gap:22px; margin-top:36px; }
+.grid.cols-3{ grid-template-columns:repeat(3,1fr); }
+.grid.cols-4{ grid-template-columns:repeat(4,1fr); }
+@media (max-width:900px){ .grid.cols-3, .grid.cols-4{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .grid.cols-3, .grid.cols-4{ grid-template-columns:1fr; } }
+
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:26px; transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+.card:hover{ transform:translateY(-5px); border-color:var(--grad3); box-shadow:0 14px 30px rgba(47,138,209,0.14); }
+.card .icon{
+  width:44px; height:44px; border-radius:10px; margin-bottom:14px;
+  background:var(--bg-soft); display:flex; align-items:center; justify-content:center; font-size:1.25rem;
+}
+.card h3{ font-size:1.02rem; margin-bottom:6px; }
+.card p{ color:var(--muted); font-size:0.9rem; line-height:1.55; }
+.card a.proj-link{ display:inline-block; margin-top:10px; font-size:0.85rem; color:var(--grad1); font-weight:700; text-decoration:none; }
+
+/* SKILL BARS */
+.skill{ margin-bottom:16px; }
+.skill-top{ display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:6px; color:var(--muted); }
+.skill-track{ height:8px; background:var(--bg-soft); border-radius:6px; overflow:hidden; border:1px solid var(--line); }
+.skill-fill{ height:100%; border-radius:6px; background:linear-gradient(90deg,var(--grad1),var(--grad3)); }
+
+/* TIMELINE */
+.timeline{ position:relative; margin-top:36px; padding-left:28px; border-left:2px solid var(--line); }
+.t-item{ position:relative; margin-bottom:36px; }
+.t-item::before{
+  content:''; position:absolute; left:-35px; top:4px; width:13px; height:13px; border-radius:50%;
+  background:var(--grad2); box-shadow:0 0 0 4px var(--bg);
+}
+.t-item .date{ font-size:0.78rem; color:var(--grad1); font-weight:700; letter-spacing:1px; }
+.t-item h3{ margin:6px 0; }
+.t-item p{ color:var(--muted); font-size:0.92rem; }
+
+/* SINGLE TESTIMONIAL */
+.review-card{
+  margin-top:36px; padding:36px; border-radius:16px; background:var(--card);
+  border:1px solid var(--line); max-width:680px;
+}
+.review-card blockquote{ font-size:1.1rem; line-height:1.6; color:var(--text); }
+.review-card .who{ margin-top:18px; color:var(--grad1); font-weight:700; }
+.review-card .role{ color:var(--muted); font-size:0.85rem; }
+
+/* HIRE */
+.hire-box{
+  margin-top:36px; padding:42px; border-radius:18px;
+  background:var(--bg-soft); border:1px solid var(--line); text-align:center;
+}
+.whatsapp-number{ font-size:1.3rem; font-weight:800; letter-spacing:0.5px; margin:12px 0; color:#1ea656; }
+
+footer{
+  border-top:1px solid var(--line); padding:30px 6vw; text-align:center;
+  color:var(--muted); font-size:0.84rem; position:relative; z-index:1;
+}
+footer a{ color:var(--grad1); text-decoration:none; }
+
+/* CERTIFICATES */
+.cert-card{ padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.cert-thumb{
+  aspect-ratio:4/3; background:var(--bg-soft); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; overflow:hidden; cursor:pointer;
+}
+.cert-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.cert-thumb .placeholder{ color:var(--muted); font-size:0.85rem; text-align:center; padding:16px; line-height:1.5; }
+.cert-body{ padding:20px 22px 22px; }
+.cert-body .issuer{ font-size:0.8rem; color:var(--grad1); font-weight:700; margin-top:4px; }
+.cert-body .btn{ margin-top:14px; padding:9px 18px; font-size:0.84rem; }
+.lightbox{
+  position:fixed; inset:0; z-index:100; background:rgba(20,20,18,0.82);
+  display:none; align-items:center; justify-content:center; padding:24px; cursor:zoom-out;
+}
+.lightbox.open{ display:flex; }
+.lightbox img{ max-width:100%; max-height:100%; border-radius:8px; }
+
+/* landscape certificate: image left, details right */
+.cert-card.landscape{ flex-direction:row; align-items:stretch; max-width:1040px; }
+.cert-card.landscape .cert-thumb{ flex:1.25; aspect-ratio:auto; border-bottom:0; border-right:1px solid var(--line); background:#fff; padding:14px; }
+.cert-card.landscape .cert-thumb img{ width:100%; height:auto; object-fit:contain; border-radius:8px; }
+.cert-card.landscape .cert-body{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+@media (max-width:820px){
+  .cert-card.landscape{ flex-direction:column; }
+  .cert-card.landscape .cert-thumb{ border-right:0; border-bottom:1px solid var(--line); }
+}
+.proj-list{ margin:12px 0 14px 18px; padding:0; color:var(--muted); font-size:0.88rem; line-height:1.55; }
+.proj-list li{ margin-bottom:4px; }
+.cert-card.proj-card .tags{ margin-top:4px; }
+.verified{ display:inline-block; font-size:0.74rem; font-weight:700; padding:4px 10px; border-radius:20px; background:#e7f7ee; border:1px solid #bfe8cf; color:#146c3a; margin-bottom:10px; }
+.cert-meta{ display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin:14px 0 0; }
+.cert-meta dt{ font-size:0.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+.cert-meta dd{ margin:2px 0 0; font-size:0.92rem; font-weight:700; word-break:break-word; }
+.cert-meta .wide{ grid-column:1 / -1; }
+.cert-note{ font-size:0.8rem; margin-top:12px; }
+
+/* LOCATION */
+.map-wrap{
+  margin-top:36px; border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  background:var(--card); display:grid; grid-template-columns:0.7fr 1.3fr;
+}
+@media (max-width:760px){ .map-wrap{ grid-template-columns:1fr; } }
+.map-info{ padding:32px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+.map-info h3{ font-size:1.15rem; }
+.map-info p{ color:var(--muted); font-size:0.92rem; line-height:1.6; }
+.map-frame{ width:100%; height:100%; min-height:340px; border:0; display:block; }
+.btn:focus-visible, nav a:focus-visible, .cert-thumb:focus-visible{ outline:3px solid var(--grad2); outline-offset:3px; }
+
+/* HERO BAND (full width, light) */
+#home{ position:relative; }
+#home::before{
+  content:''; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw; z-index:-1;
+  background:
+    radial-gradient(circle at 88% 15%, rgba(93,180,238,0.22), transparent 45%),
+    radial-gradient(circle at 8% 90%, rgba(191,227,251,0.55), transparent 42%),
+    linear-gradient(135deg,#ffffff 0%,#eef7ff 55%,#dcefff 100%);
+  border-bottom:1px solid var(--line);
+}
+#home .eyebrow{ color:#1f6fb2; }
+#home .rotator{ color:#2f8ad1; }
+#home .btn-primary{ background:var(--grad1); }
+#home .photo-wrap{ background:linear-gradient(135deg,#8fd0f7,#2f8ad1); box-shadow:0 18px 40px rgba(47,138,209,0.2); }
+#home .photo-wrap img{ border-color:#ffffff; }
+.corner-orb{ display:none; }
+
+/* ONLINE STATUS (blinking green dot) */
+.online{
+  display:inline-flex; align-items:center; gap:10px; margin-bottom:16px;
+  padding:8px 16px; border-radius:50px; text-decoration:none;
+  background:#fff; border:1px solid #bfe8cf; color:#146c3a; font-weight:700; font-size:0.86rem;
+  box-shadow:0 4px 14px rgba(30,166,86,0.15);
+}
+.online .dot{
+  position:relative; width:11px; height:11px; border-radius:50%; background:#1ea656;
+  animation:blink 1.3s ease-in-out infinite;
+}
+.online .dot::after{
+  content:''; position:absolute; inset:-5px; border-radius:50%; border:2px solid #1ea656;
+  animation:ring 1.3s ease-out infinite;
+}
+@keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:0.25; } }
+@keyframes ring{ 0%{ transform:scale(0.6); opacity:0.9; } 100%{ transform:scale(1.6); opacity:0; } }
+@media (prefers-reduced-motion:reduce){ .online .dot, .online .dot::after{ animation:none; } }
+
+/* ROTATING ROLE (right to left) */
+.rotator{
+  position:relative; height:1.25em; overflow:hidden; margin-top:4px;
+  font-size:clamp(1.8rem,4.4vw,3rem); font-weight:800; line-height:1.25; color:var(--grad2);
+}
+.rot-word{
+  position:absolute; left:0; top:0; white-space:nowrap;
+  transform:translateX(105%); opacity:0;
+}
+.rot-word.active{ transform:translateX(0); opacity:1; transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s; }
+.rot-word.leave{ transform:translateX(-105%); opacity:0; transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s; }
+@media (max-width:880px){ .rotator{ text-align:center; } .rot-word{ width:100%; text-align:center; } }
+
+/* PROJECTS */
+.proj-card{ padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.proj-card.feature{ flex-direction:row; max-width:820px; }
+.proj-card.feature .proj-top{ width:240px; height:auto; flex-shrink:0; }
+@media (max-width:640px){ .proj-card.feature{ flex-direction:column; } .proj-card.feature .proj-top{ width:100%; height:140px; } }
+.proj-top{
+  height:150px; display:flex; align-items:center; justify-content:center; font-size:2.6rem;
+  background:linear-gradient(135deg,var(--grad1),var(--grad3)); color:#fff;
+}
+.proj-body{ padding:22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.proj-body h3{ font-size:1.05rem; }
+.proj-body p{ color:var(--muted); font-size:0.9rem; line-height:1.55; }
+.tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
+.tags span{ font-size:0.74rem; font-weight:700; padding:4px 10px; border-radius:20px; background:var(--bg-soft); border:1px solid var(--line); color:var(--grad1); }
+</style>
+</head>
+<body>
+
+<div class="corner-orb"></div>
+
+<header>
+  <div class="logo">B. RAMACHANDRAN</div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  <nav>
+    <ul id="navList">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#focus">Focus Areas</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#hobbies">Hobbies</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#hire">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-grid">
+    <div>
+      <a href="#hire" class="online"><span class="dot"></span>Online</a><br>
+      <span class="eyebrow">Cybersecurity Portfolio</span>
+      <h1>Hi, I'm Ramachandran,<br>an aspiring</h1>
+      <div class="rotator" id="rotator" aria-live="polite">
+        <span class="rot-word active">Cyber Security Analyst</span>
+        <span class="rot-word">Network Engineer</span>
+        <span class="rot-word">SOC Analyst</span>
+      </div>
+      <p class="lead">B.Tech Information Technology graduate (2022–2026) from Tamil Nadu, India. I'm learning computer networks, cryptography and Linux, and I practice network scanning and traffic analysis with Nmap and Wireshark.</p>
+      <div class="btn-row">
+        <a href="file:///C:/Users/ELCOT/OneDrive/Documents/profile/file/Ramachandran_resume.pdf%20(2).pdf" download class="btn btn-primary">⬇ Download CV</a>
+        <a href="mailto:chandru.techit@gmail.com" class="btn btn-ghost">Email Me</a>
+        <a href="https://wa.me/919361357503" target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp Me</a>
+      </div>
+    </div>
+    <div class="photo-wrap">
+      <img src="https://ik.imagekit.io/k5gqyw1je/WhatsApp%20Image%202026-06-30%20at%203.53.20%20PM.jpeg" alt="B Ramachandran">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <span class="eyebrow">About</span>
+  <h2>Who I am</h2>
+  <p class="lead">I'm B Ramachandran, a recent Information Technology graduate (B.Tech, CGPA 7.7) starting my career in cybersecurity. I'm skilled in computer networks, cryptography, Python and Linux, and I'm proficient with Nmap and Wireshark for network analysis. I want to help protect systems and data, and I'm ready to learn on the job.</p>
+  <div class="grid cols-3">
+    <div class="card"><div class="icon">🎓</div><h3>Education</h3><p>B.Tech in Information Technology, 2022–2026. CGPA 7.7.</p></div>
+    <div class="card"><div class="icon">🌐</div><h3>Internship</h3><p>3-month Network Designer internship at Crescent Infotech.</p></div>
+    <div class="card"><div class="icon">🎯</div><h3>Goal</h3><p>A career in cybersecurity as a SOC, network or security analyst.</p></div>
+  </div>
+</section>
+
+<!-- FOCUS AREAS -->
+<section id="focus">
+  <span class="eyebrow">Focus Areas</span>
+  <h2>What I'm learning and practicing</h2>
+  <p class="lead">The areas of cybersecurity I'm building hands-on skill in.</p>
+  <div class="grid cols-3">
+    <div class="card"><div class="icon">🔍</div><h3>Network scanning</h3><p>Discovering hosts, open ports and services with Nmap.</p></div>
+    <div class="card"><div class="icon">📡</div><h3>Traffic analysis</h3><p>Capturing and reading packets with Wireshark to understand network behavior.</p></div>
+    <div class="card"><div class="icon">🔐</div><h3>Cryptography</h3><p>Encryption, hashing and how they protect data in transit and at rest.</p></div>
+    <div class="card"><div class="icon">🐧</div><h3>Linux</h3><p>Working in the command line and administering Linux systems.</p></div>
+    <div class="card"><div class="icon">🐍</div><h3>Python</h3><p>Scripting to automate small security and networking tasks.</p></div>
+    <div class="card"><div class="icon">🛰️</div><h3>Computer networks</h3><p>Network design and fundamentals, from my Network Designer internship and degree.</p></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <span class="eyebrow">Projects</span>
+  <h2>Project Design</h2>
+  <p class="lead">Hands-on security and networking work. A project from my networking work.</p>
+  <div class="grid">
+    <div class="card cert-card proj-card landscape">
+      <div class="cert-thumb" tabindex="0" role="button" aria-label="View project image full size" data-cert>
+        <!-- Replace with your Packet Tracer screenshot: projects/small-office-network.png -->
+        <img src="https://ik.imagekit.io/pjfedotgbv/Screenshot%202026-11-14%20201028.png?updatedAt=1794667153922" alt="Schematic of the small office network: wireless router, PCs, laptop and smartphones">
+      </div>
+      <div class="cert-body">
+        <span class="verified" style="background:var(--bg-soft);border-color:var(--line);color:var(--grad1);">Freelance Project · March 2026 – April 2026</span>
+        <h3>Small Office Network Design</h3>
+        <div class="issuer">Cisco Packet Tracer</div>
+        <ul class="proj-list">
+          <li>Designed and simulated a small office network connecting PCs, laptops, smartphones and wireless routers.</li>
+          <li>Configured IP addressing and DHCP to establish automated connectivity.</li>
+          <li>Implemented LAN topology design and wireless network configurations.</li>
+          <li>Applied routing, switching and network device configuration fundamentals.</li>
+          <li>Ran troubleshooting and connectivity tests to identify configuration issues.</li>
+          <li>Used TCP/IP and OSI model concepts to understand data transmission.</li>
+        </ul>
+        <div class="tags"><span>Cisco Packet Tracer</span><span>TCP/IP</span><span>LAN/WAN</span><span>IP Addressing</span><span>DHCP</span><span>VLANs</span><span>Routing &amp; Switching</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <span class="eyebrow">Skills</span>
+  <h2>Technical Skills</h2>
+  <div class="hero-grid" style="align-items:start; grid-template-columns:1fr;">
+    <div>
+      <div class="skill"><div class="skill-top"><span>Computer Networking</span></div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Network Scanning (Nmap &amp; Wireshark)</span></div><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Python Programming</span></div><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Cryptography</span></div><div class="skill-track"><div class="skill-fill" style="width:82%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Linux Administration</span></div><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <span class="eyebrow">Experience</span>
+  <h2>My Journey</h2>
+  <div class="timeline">
+    <div class="t-item"><div class="date">Ongoing</div><h3>Cybersecurity Learner</h3><p>Practicing network scanning and packet analysis with Nmap and Wireshark, and deepening my knowledge of cryptography and Linux.</p></div>
+    <div class="t-item"><div class="date">3 months</div><h3>Network Designer Intern — Crescent Infotech</h3><p>Worked on network design, building a practical base in how networks are planned and connected.</p></div>
+    <div class="t-item"><div class="date">2022 – 2026</div><h3>B.Tech Information Technology</h3><p>Studied computer networks, cryptography, Python and Linux. CGPA 7.7.</p></div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <span class="eyebrow">Certificates</span>
+  <h2>Certifications</h2>
+  <p class="lead">Click the certificate image to view it full size.</p>
+  <div class="grid">
+    <div class="card cert-card landscape">
+      <div class="cert-thumb" tabindex="0" role="button" aria-label="View certificate full size" data-cert>
+        <img src="https://ik.imagekit.io/pjfedotgbv/WhatsApp%20Image%202026-11-14%20at%207.55.53%20PM.jpeg?updatedAt=1794666694509" alt="CompTIA Network+ skill assessment certificate issued to Ramachandran by CareerByteCode">
+      </div>
+      <div class="cert-body">
+        <span class="verified">✔ Verified: Networking Fundamentals</span>
+        <h3>CompTIA Network+ (Skill Assessment)</h3>
+        <div class="issuer">CareerByteCode · Certificate of Skill Verification</div>
+        <dl class="cert-meta">
+          <div><dt>Awarded to</dt><dd>Ramachandran</dd></div>
+          <div><dt>Skill area</dt><dd>Networking Fundamentals</dd></div>
+          <div><dt>Score</dt><dd>78 percent</dd></div>
+          <div><dt>Issued</dt><dd>23 Sep 2026</dd></div>
+          <div><dt>Valid until</dt><dd>23 Sep 2028</dd></div>
+          <div><dt>Credential ID</dt><dd>CBC-ASSESS-2026-0043</dd></div>
+          <div class="wide"><dt>Signed by</dt><dd>Sangeetha, Director, CareerByteCode</dd></div>
+        </dl>
+        <p class="cert-note">Verify at careerbytecode.in/verify using the credential ID.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+  <span class="eyebrow">Hobbies</span>
+  <h2>Beyond the Screen</h2>
+  <div class="grid cols-4">
+    <div class="card"><div class="icon">🖥️</div><h3>Exploring Tech</h3><p>Learning new tools in networking &amp; security.</p></div>
+    <div class="card"><div class="icon">📈</div><h3>Stock Analytics</h3><p>Investing in good companies and analyzing stock market trends.</p></div>
+    <div class="card"><div class="icon">🎧</div><h3>Music</h3><p>Listening while practicing.</p></div>
+    <div class="card"><div class="icon">📖</div><h3>Reading</h3><p>Security blogs and write-ups.</p></div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <span class="eyebrow">Location</span>
+  <h2>Find me in Anna Nagar, Chennai</h2>
+  <div class="map-wrap">
+    <div class="map-info">
+      <h3>Anna Nagar, Chennai, Tamil Nadu, India</h3>
+      <p>Available for cybersecurity roles, on-site in Chennai or remote.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Anna+Nagar%2C+Chennai%2C+Tamil+Nadu" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </div>
+    <iframe class="map-frame" title="Map showing Anna Nagar, Chennai" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=Anna+Nagar,Chennai,Tamil+Nadu&z=14&output=embed"></iframe>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="hire">
+  <span class="eyebrow">Contact</span>
+  <h2>Hiring for a cybersecurity role?</h2>
+  <div class="hire-box">
+    <p class="lead" style="margin:0 auto;">I'm ready to learn and contribute. Email me or message me on WhatsApp.</p>
+    <div class="whatsapp-number">✉ chandru.techit@gmail.com</div>
+    <div class="btn-row" style="justify-content:center;">
+      <a href="mailto:chandru.techit@gmail.com" class="btn btn-primary">Email Me</a>
+      <a href="https://wa.me/919361357503?text=Hi!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk." target="_blank" rel="noopener" class="btn btn-whatsapp">Chat on WhatsApp</a>
+      <a href="Ramachandran_B_CV.pdf" download class="btn btn-ghost">⬇ Download CV</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lightbox" id="lightbox"><img alt="Certificate"></div>
+
+<footer>
+  © 2026 B Ramachandran. Tamil Nadu, India. | <a href="mailto:chandru.techit@gmail.com">chandru.techit@gmail.com</a> | WhatsApp: <a href="https://wa.me/919361357503" target="_blank" rel="noopener">+91 93613 57503</a>
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navList').classList.toggle('open');
+});
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click', ()=> document.getElementById('navList').classList.remove('open'));
+});
+const sections = document.querySelectorAll('main section');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', ()=>{
+  let current='';
+  sections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id'); });
+  navLinks.forEach(l=> l.classList.toggle('active', l.getAttribute('href') === '#'+current));
+});
+// rotating roles: cycles 1 -> 2 -> 3, sliding right to left
+(function(){
+  const words=[...document.querySelectorAll('#rotator .rot-word')];
+  if(!words.length) return;
+  let i=0;
+  setInterval(()=>{
+    const cur=words[i];
+    i=(i+1)%words.length;
+    const next=words[i];
+    cur.classList.remove('active'); cur.classList.add('leave');
+    next.classList.remove('leave'); next.style.transition='none'; next.style.transform='translateX(105%)'; next.style.opacity='0';
+    void next.offsetWidth;
+    next.style.transition=''; next.style.transform=''; next.style.opacity='';
+    next.classList.add('active');
+    setTimeout(()=>{ cur.classList.remove('leave'); },750);
+  },2800);
+})();
+
+// certificate lightbox
+const lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img');
+document.querySelectorAll('[data-cert]').forEach(t=>{
+  const open=()=>{ const img=t.querySelector('img'); if(!img) return; lbImg.src=img.src; lb.classList.add('open'); };
+  t.addEventListener('click',open);
+  t.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+});
+lb.addEventListener('click',()=>lb.classList.remove('open'));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+</script>
+
+</body>
+</html>
